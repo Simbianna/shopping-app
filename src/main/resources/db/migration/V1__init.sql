@@ -11,8 +11,8 @@ CREATE TABLE users (
 
 INSERT INTO users
 VALUES
-('user1', '{noop}123', true),
-('user2', '{noop}123', true);
+('user1', '{bcrypt}123', true),
+('user2', '{bcrypt}123', true);
 
 CREATE TABLE authorities (
     username varchar(50) NOT NULL,

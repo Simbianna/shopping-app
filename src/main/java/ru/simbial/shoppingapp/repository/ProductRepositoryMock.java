@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-@Component
-public class ProductRepositoryMock implements ProductRepository {
+//@Component
+public class ProductRepositoryMock {
     private List<Product> products;
 
     @PostConstruct
@@ -23,22 +23,22 @@ public class ProductRepositoryMock implements ProductRepository {
         products.add(new Product(3L, "Cheese", 200));
     }
 
-    @Override
+    
     public List<Product> findAll() {
         return products;
     }
 
-    @Override
+    
     public Product findByTitle(String title) {
         return products.stream().filter(p -> p.getTitle().equals(title)).findFirst().get();
     }
 
-    @Override
+    
     public Product findById(Long id) {
         return products.stream().filter(p -> p.getId().equals(id)).findFirst().get();
     }
 
-    @Override
+    
     public void save(Product product) {
         if (product.getId() == null) {
             products.stream()
@@ -60,12 +60,12 @@ public class ProductRepositoryMock implements ProductRepository {
         }
     }
 
-    @Override
+    
     public void deleteById(Long id) {
         products.remove(findById(id));
     }
 
-    @Override
+    
     public List<Product> findFiltered(String input, String minPrice, String maxPrice) {
         Stream<Product> stream = products.stream();
         if (input != null && !input.isEmpty()) {

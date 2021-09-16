@@ -16,17 +16,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                .and().csrf().disable();
-    }
-
-
-   /* private DataSource dataSource;
+    private DataSource dataSource;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -50,12 +40,19 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .anyRequest().permitAll()
-                .antMatchers("/secured/**").hasAnyRole("ADMIN")
+              //  .antMatchers("/secured/**").hasAnyRole("ADMIN")
                 .and()
                 .formLogin()
 //                .loginPage("/login")
 //                .loginProcessingUrl("/authenticateTheUser")
                 .permitAll();
-    }*/
+    }
 }
-
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .anyRequest()
+//                .permitAll()
+//                .and().csrf().disable();
+//    }
