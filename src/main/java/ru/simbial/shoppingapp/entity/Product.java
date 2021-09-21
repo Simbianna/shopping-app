@@ -1,8 +1,14 @@
 package ru.simbial.shoppingapp.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "products")
 public class Product {
 
@@ -15,38 +21,6 @@ public class Product {
     private String title;
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Product() {
-    }
-
-    public Product(Long id, String title, double price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-    }
 }

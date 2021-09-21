@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Welcome</h1>
+<div>
+   <!-- <h3>${pageContext.request.userPrincipal.name}</h3>-->
+    <sec:authorize access="!isAuthenticated()">
+        <h4><a href="/shop/login">Войти</a></h4>
+        <h4><a href="/shop/registration">Зарегистрироваться</a></h4>
+    </sec:authorize>
+    <sec:authorize access="isAuthenticated()">
+        <h4><a href="/shop/logout">Выйти</a></h4>
+    </sec:authorize>
+    <h4><a href="/shop/products">Начать шоппинг</a></h4>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <h4><a href="/shop/admin">Пользователи </a></h4>
+    </sec:authorize>
+</div>
+
+</body>
+</html>

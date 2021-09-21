@@ -1,71 +1,49 @@
 package ru.simbial.shoppingapp.controller;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import ru.simbial.shoppingapp.entity.Product;
-import ru.simbial.shoppingapp.repository.specification.ProductSpec;
 import ru.simbial.shoppingapp.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;;
+import javax.validation.Valid;
+import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/products")
 public class ProductsController {
     private ProductsService productsService;
-    private final static Integer PAGE_SIZE = 10;
+    private final static Integer PAGE_SIZE = 100;
 
     @Autowired
     public void setProductsService(ProductsService productsService) {
         this.productsService = productsService;
     }
 
+
+    //TODO check decimal params
     @GetMapping()
-    String showProductsListWithFilter(HttpServletRequest request, Model model,
-                                     // @RequestParam(value = "p", required = false) Integer pageNum,
-                                      @RequestParam(value = "page") Optional<Integer> page,
+    String showProductsListWithFilter(Model model,
+                                      @RequestParam(value = "page", required = false) Integer pageNum,
                                       @RequestParam(value = "input", required = false) String input,
-                                      @RequestParam(value = "maxPrice", required = false) Double maxPrice,
-                                      @RequestParam(value = "minPrice", required = false) Double minPrice) {
-        //  final int currentPage = (page.orElse(0) < 1) ? 1 : page.get() - 1;
-        int pageNumber = 0;
+                                      @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
+                                      @RequestParam(value = "minPrice", required = false) BigDecimal minPrice) {
+        int pageNumber = pageNum != null ? pageNum - 1 : 0;
 
-        StringBuilder filters = new StringBuilder();
-        Specification<Product> specification = Specification.where(null);
-        if (request.getParameter("pageNum") != null && !request.getParameter("pageNum").isEmpty()) {
-            pageNumber = Integer.parseInt(request.getParameter("pageNum")) - 1;
-        }
-
-        if (input != null) {
-            specification = specification.and(ProductSpec.titleContains(input));
-            filters.append("@contains word=").append(input);
-        }
-        if (minPrice != null) {
-            specification = specification.and(ProductSpec.priceGraterThanOrEquals(minPrice));
-            filters.append("@min=").append(minPrice);
-        }
-        if (maxPrice != null) {
-            specification = specification.and(ProductSpec.priceLessThanOrEquals(maxPrice));
-            filters.append("@max=").append(maxPrice);
-        }
-        Page<Product> products = productsService.getAllFilteredWithPaginating(pageNumber, PAGE_SIZE, specification);
-
-        //  List<Product> products = productsService.getAllProds();
-
+        StringBuilder filter = new StringBuilder();
+        Page<Product> products = productsService.getAllFilteredWithPaginating(pageNumber, PAGE_SIZE, input, maxPrice, minPrice, filter);
         Product product = new Product();
 
         model.addAttribute("product", product);
+        model.addAttribute("filter", filter.toString());
         model.addAttribute("input", input);
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
-        model.addAttribute("products", products);
-      //  model.addAttribute("page", pageNum);
-        model.addAttribute("filter", filters);
+        model.addAttribute("products", products.getContent());
+        model.addAttribute("page", pageNum);
+
         return "products";
     }
 
@@ -85,7 +63,7 @@ public class ProductsController {
 
     @PostMapping("/edit")
     public String editProduct(@ModelAttribute(value = "product") Product product) {
-        productsService.save(product);
+        productsService.saveOrUpdate(product);
         return "redirect:/products";
         //  return "product-page";
     }
@@ -105,7 +83,7 @@ public class ProductsController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute(value = "product") Product product) {
-        productsService.save(product);
+        productsService.saveOrUpdate(product);
         return "redirect:/products";
     }
 

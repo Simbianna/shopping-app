@@ -4,6 +4,7 @@ import ru.simbial.shoppingapp.entity.Product;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,12 +14,12 @@ import java.util.stream.Stream;
 
 //@Component
 public class ProductRepositoryMock {
-    private List<Product> products;
+/*    private List<Product> products;
 
     @PostConstruct
     public void init() {
         products = new ArrayList<>();
-        products.add(new Product(1L, "Bread", 40));
+        products.add(new Product(1L, "Bread", 40.00));
         products.add(new Product(2L, "Milk", 90));
         products.add(new Product(3L, "Cheese", 200));
     }
@@ -71,12 +72,12 @@ public class ProductRepositoryMock {
         if (input != null && !input.isEmpty()) {
             stream = stream.filter(p -> p.getTitle().toLowerCase().contains(input.toLowerCase()));
         }
-        if (minPrice != null && !minPrice.isEmpty()) {
-            stream = stream.filter(p -> p.getPrice() >= Integer.parseInt(minPrice));
+        if (minPrice != null && !minPrice.isEmpty() && minPrice) {
+            stream = stream.filter(p -> p.getPrice().compareTo(BigDecimal.valueOf(Double.parseDouble(minPrice)) Integer.parseInt(minPrice)) >= );
         }
         if (maxPrice != null && !maxPrice.isEmpty()) {
             stream = stream.filter(p -> p.getPrice() <= Integer.parseInt(maxPrice));
         }
         return stream.collect(Collectors.toList());
-    }
+    }*/
 }
