@@ -1,6 +1,7 @@
 package ru.simbial.shoppingapp.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import ru.simbial.shoppingapp.entity.Product;
 import ru.simbial.shoppingapp.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 
 @Controller
@@ -61,8 +61,8 @@ public class ProductsController {
         return "product-edit";
     }
 
-    @PostMapping("/edit")
-    public String editProduct(@ModelAttribute(value = "product") Product product) {
+    @PostMapping("/edit/{id}")
+    public String editProduct(@ModelAttribute(value = "product") Product product, @PathVariable(value = "id") Long id) {
         productsService.saveOrUpdate(product);
         return "redirect:/products";
         //  return "product-page";
@@ -75,7 +75,8 @@ public class ProductsController {
         return "product-page";
     }
 
-    @PostMapping("/remove/{id}")
+    @PostMapping("/{id}")
+    @Secured("ADMIN")
     public String removeProduct(@PathVariable(value = "id") Long id) {
         productsService.deleteById(id);
         return "redirect:/products";

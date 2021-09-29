@@ -9,11 +9,13 @@ import java.util.List;
 
 
 public interface UserService extends UserDetailsService {
-    User findByUserName(String username);
+    /*User findByUserName(String username);*/
 
-    User create(User user);
+   /* User create(User user);
 
-    void update(User user);
+    void update(User user);*/
+
+    boolean saveUser(User user);
 
     User findUserById(Long userId);
 

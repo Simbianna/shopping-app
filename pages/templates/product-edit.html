@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
 <h3 th:text="${product.id == null ? 'Добавление товара' : 'Изменение товара'}"></h3>
 
 <form th:action="@{/products/edit}"

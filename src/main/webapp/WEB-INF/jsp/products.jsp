@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 
 <!DOCTYPE HTML>
@@ -12,9 +13,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
 <body>
+<a type="button" class="btn btn-default"
+   href="${pageContext.request.contextPath}/">Главная
+</a>
+<br>
+
 <h1 align="center">Каталог товаров</h1>
 <div class="container">
-    <form action="/shop/products" method="get" class="form-horizontal">
+    <form action="${pageContext.request.contextPath}/products" method="GET" class="form-horizontal">
         <br>
         <div style="margin-bottom: 25px" class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -37,11 +43,11 @@
                 <button type="submit" class="btn btn-primary">
                     <c:choose>
                         <c:when test="${filter.length()>0}">
-                           Сбросить фильтр
+                            Сбросить фильтр
                         </c:when>
                         <c:otherwise>Фильтровать</c:otherwise>
                     </c:choose>
-                    </button>
+                </button>
             </div>
         </div>
     </form>
@@ -52,8 +58,10 @@
         </c:when>
     </c:choose>
     <br>
-
-    <a href="/products/add">Добавить товар</a>
+    <sec:authorize access="hasAnyAuthority('ADMIN')">
+    <a type="button" class="btn btn-success"
+       href="${pageContext.request.contextPath}/products/add">Добавить товар</a>
+    </sec:authorize>
 
     <table class="table table-hover">
         <thead>
@@ -70,10 +78,27 @@
                 <td>${product.id}</td>
                 <td>${product.title}</td>
                 <td>${product.price}</td>
-                <td><a type="button" class="btn btn-success" href="/products/edit/${product.id}">Редактировать</a></td>
-                <td><a type="button" class="btn btn-warning" href="/products/remove/${product.id}">Удалить</a></td>
+                <td><a type="button" class="btn btn-basic"
+                       href="${pageContext.request.contextPath}/products/show/${product.id}">Просмотреть</a></td>
+                <td>
+                    <sec:authorize access="hasAnyAuthority('ADMIN')">
+                        <a type="button" class="btn btn-default"
+                           href="${pageContext.request.contextPath}/products/edit/${product.id}">Редактировать</a>
+                    </sec:authorize>
+                </td>
+                <td>
+                    <sec:authorize access="hasAnyAuthority('ADMIN')">
+                        <form:form method="DELETE" action="${pageContext.request.contextPath}/products/${product.id}">
+                            <input type="submit" class="btn btn-danger" value="Удалить">
+                        </form:form>
+                    </sec:authorize>
+                </td>
+
             </tr>
         </c:forEach>
+
+        <br>
+
 
         </tbody>
     </table>

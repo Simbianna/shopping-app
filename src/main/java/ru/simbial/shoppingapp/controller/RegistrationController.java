@@ -7,10 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.simbial.shoppingapp.entity.Role;
 import ru.simbial.shoppingapp.entity.User;
 import ru.simbial.shoppingapp.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @Controller
 public class RegistrationController {
@@ -33,15 +35,11 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        /*if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
-            model.addAttribute("passwordError", "Пароли не совпадают");
-            return "registration";
-        }*/
-        if (userService.findByUserName(userForm.getUsername()) != null) {
+
+        if (!userService.saveUser(userForm)){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "registration";
         }
-        userService.create(userForm);
 
         return "redirect:/";
     }
