@@ -69,7 +69,7 @@
             <th>ID</th>
             <th>Название товара</th>
             <th>Цена</th>
-            <th align="center" colspan="3" scope="colgroup">Действия</th>
+            <th colspan="3" scope="colgroup">Действия</th>
         </tr>
         </thead>
         <tbody>

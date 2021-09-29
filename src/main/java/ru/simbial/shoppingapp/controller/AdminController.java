@@ -22,25 +22,5 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/users")
-    public String userList(Model model) {
-        model.addAttribute("allUsers", userService.getAllUsers());
-        return "users";
-    }
 
-    @PostMapping("/users")
-    public String deleteUser(@RequestParam(required = true, defaultValue = "" ) Long userId,
-                              @RequestParam(required = true, defaultValue = "" ) String action,
-                              Model model) {
-        if (action.equals("delete")){
-            userService.delete(userId);
-        }
-        return "redirect:/users";
-    }
-
-    @GetMapping("/users/{userId}")
-    public String  gtUser(@PathVariable("userId") Long userId, Model model) {
-        model.addAttribute("user", userService.findUserById(userId));
-        return "users";
-    }
 }

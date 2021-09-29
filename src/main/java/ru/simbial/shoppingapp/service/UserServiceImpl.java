@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
         return userFromDb.orElse(new User());
     }
 
+    @Override
+    public User updateUser(User user) {
+        userRepository.save(user);
+        return user;
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

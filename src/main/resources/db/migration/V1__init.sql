@@ -18,8 +18,8 @@ VALUES ('Bread', 40),
 CREATE TABLE users
 (
     id       serial,
-    username VARCHAR(50)  NOT NULL,
-    password VARCHAR(80)  NOT NULL,
+    username VARCHAR(50)  NOT NULL unique,
+    password VARCHAR(80)  NOT NULL unique,
     name     VARCHAR(100) NOT NULL,
     email    VARCHAR(50)  NOT NULL,
     PRIMARY KEY (id)

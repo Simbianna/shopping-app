@@ -9,6 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Set;
@@ -26,16 +31,32 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "username")
+    @NotBlank
+    @Size(max = 50)
     private String username;
 
     @Column(name = "password")
+    @NotBlank
+    @Size(min = 5, max = 80)
     private String password;
 
     @Column(name = "name")
+    @NotBlank
+    @Size(max = 100)
     private String name;
 
-    @Column(name = "email")
+    @NotBlank
+    @Column(name = "email", nullable = false, unique = true)
+    @Size(max = 50)
+    @Email
     private String email;
+
+    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
+    private boolean enabled;
+
+    @NotNull
+    @Column(name = "registration_date", nullable = false, columnDefinition = "timestamp default now()")
+    private LocalDateTime registrationDate = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -47,19 +68,21 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
 
-    public User(String username, String password, String name, String email) {
+    public User(String username, String password, String name, String email, boolean enabled) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
+        this.enabled = enabled;
     }
 
-    public User(String username, String password, String name, String email, Collection<Role> roles) {
+    public User(String username, String password, String name, String email, Collection<Role> roles, boolean enabled) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         setRoles(roles);
+        setEnabled(enabled);
     }
 
     public void setRoles(Collection<Role> roles){
@@ -88,6 +111,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
