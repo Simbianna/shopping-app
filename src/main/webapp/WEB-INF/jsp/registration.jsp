@@ -14,7 +14,7 @@
 
 <body>
 <a type="button" class="btn btn-default"
-   href="${pageContext.request.contextPath}/shop">Главная
+   href="${pageContext.request.contextPath}/">Главная
 </a>
 <br>
 
@@ -30,6 +30,8 @@
         <div>
             <form:input type="name" path="name"
                         placeholder="Имя"></form:input>
+            <form:errors path="name"></form:errors>
+                ${nameError}
         </div>
         <div>
             <form:input type="email" path="email"
@@ -37,6 +39,8 @@
         </div>
         <div>
             <form:input type="password" path="password" placeholder="Пароль"></form:input>
+            <form:errors path="password"></form:errors>
+                ${passwordError}
         </div>
 
         <button type="submit">Зарегистрироваться</button>

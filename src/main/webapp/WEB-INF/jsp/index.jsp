@@ -12,7 +12,15 @@
 <body>
 <div>
 <H1></H1>
-    <h3>${pageContext.request.userPrincipal.name}</h3>
+    <c:choose>
+        <c:when test="${pageContext.request.userPrincipal != null}">
+            <h3>Добро пожаловать, ${pageContext.request.userPrincipal.name}!</h3>
+        </c:when>
+        <c:otherwise>
+            <h3>Для продолжения необходимо войти</h3>
+        </c:otherwise>
+    </c:choose>
+
     <sec:authorize access="!isAuthenticated()">
         <h4><a href="${pageContext.request.contextPath}/login">Войти</a></h4>
         <h4><a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a></h4>
@@ -21,7 +29,7 @@
         <h4><a href="${pageContext.request.contextPath}/logout">Выйти</a></h4>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
-    <h4><a href="${pageContext.request.contextPath}/products">Начать шоппинг</a></h4>
+    <h4><a href="${pageContext.request.contextPath}/products">К списку товаров</a></h4>
     </sec:authorize>
     <sec:authorize access="hasAnyAuthority('ADMIN')">
         <h4><a href="${pageContext.request.contextPath}/admin">Администирование</a></h4>

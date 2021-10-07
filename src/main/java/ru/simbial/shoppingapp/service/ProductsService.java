@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.simbial.shoppingapp.repository.specification.ProductSpec;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -32,6 +33,21 @@ public class ProductsService {
 
     public void saveOrUpdate(Product product) {
         productRepository.save(product);
+    }
+
+    @Transactional
+    public void incrementViewsByProductId(Long id){
+        productRepository.incrementViewsForProduct(id);
+    }
+
+    @Transactional
+    public void eraseViewsByProductId(Long id){
+        productRepository.eraseViewsForProduct(id);
+    }
+
+    @Transactional
+    public void eraseAllViews(Long id){
+        productRepository.eraseViewsForProduct(id);
     }
 
     public Page<Product> getAllFilteredWithPaginating(int pageNumber, int pageSize, String input, BigDecimal maxPrice, BigDecimal minPrice, StringBuilder filter) {

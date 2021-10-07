@@ -59,8 +59,8 @@
     </c:choose>
     <br>
     <sec:authorize access="hasAnyAuthority('ADMIN')">
-    <a type="button" class="btn btn-success"
-       href="${pageContext.request.contextPath}/products/add">Добавить товар</a>
+        <a type="button" class="btn btn-success"
+           href="${pageContext.request.contextPath}/products/add">Добавить товар</a>
     </sec:authorize>
 
     <table class="table table-hover">
@@ -69,6 +69,7 @@
             <th>ID</th>
             <th>Название товара</th>
             <th>Цена</th>
+            <sec:authorize access="hasAnyAuthority('ADMIN')"><th>Просмотры</th> </sec:authorize>
             <th colspan="3" scope="colgroup">Действия</th>
         </tr>
         </thead>
@@ -78,6 +79,7 @@
                 <td>${product.id}</td>
                 <td>${product.title}</td>
                 <td>${product.price}</td>
+                <td><sec:authorize access="hasAnyAuthority('ADMIN')">${product.views}</sec:authorize></td>
                 <td><a type="button" class="btn btn-basic"
                        href="${pageContext.request.contextPath}/products/show/${product.id}">Просмотреть</a></td>
                 <td>
@@ -93,7 +95,6 @@
                         </form:form>
                     </sec:authorize>
                 </td>
-
             </tr>
         </c:forEach>
 

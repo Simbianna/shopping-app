@@ -68,16 +68,20 @@ public class ProductsController {
         //  return "product-page";
     }
 
+
     @GetMapping("/show/{id}")
     public String showOneProduct(Model model, @PathVariable(value = "id") Long id) {
         Product product = productsService.getById(id);
         model.addAttribute("product", product);
+        productsService.incrementViewsByProductId(id);
         return "product-page";
     }
 
+
     @PostMapping("/{id}")
     @Secured("ADMIN")
-    public String removeProduct(@PathVariable(value = "id") Long id) {
+    public String removeProduct(@PathVariable(value = "id") Long id
+    ) {
         productsService.deleteById(id);
         return "redirect:/products";
     }

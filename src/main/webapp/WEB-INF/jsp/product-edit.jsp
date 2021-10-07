@@ -45,6 +45,16 @@
             Цена: <form:input type="text" path="price" placeholder="Цена"
                               autofocus="true"></form:input>
         </div>
+        <c:choose>
+            <c:when test="${product.id == null}">
+                <input type="hidden" name="views" value="0">
+            </c:when>
+            <c:otherwise>
+                Просмотры: <form:input type="text" path="views" placeholder="Просмотры"
+                                  autofocus="true"></form:input>
+            </c:otherwise>
+        </c:choose>
+
 
         <button type="submit" class="btn btn-success">Подтвердить</button>
     </form:form>

@@ -12,7 +12,7 @@ import ru.simbial.shoppingapp.entity.User;
 import ru.simbial.shoppingapp.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Arrays;
+
 
 @Controller
 public class RegistrationController {
@@ -33,7 +33,14 @@ public class RegistrationController {
     public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+           if (bindingResult.getModel().containsKey("name")){
+               model.addAttribute("nameError", "invalid name");
+           }
+            if (bindingResult.getModel().containsKey("password")){
+                model.addAttribute("passwordError", "invalid password");
+            }
             return "registration";
+
         }
 
         if (!userService.saveUser(userForm)){

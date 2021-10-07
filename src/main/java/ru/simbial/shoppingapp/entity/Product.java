@@ -1,6 +1,8 @@
 package ru.simbial.shoppingapp.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,4 +25,6 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "views")
+    private Long views;
 }

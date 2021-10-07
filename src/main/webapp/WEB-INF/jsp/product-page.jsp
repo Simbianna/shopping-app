@@ -17,16 +17,16 @@
 </a>
 <br>
 <a type="button" class="btn btn-default"
-   href="${pageContext.request.contextPath}/shop/products">К списку товаров
+   href="${pageContext.request.contextPath}/products">К списку товаров
 </a>
 <br>
 <table>
     <tr>
-        <td>Название: </td>
+        <td>Название:</td>
         <td>${product.title}</td>
     </tr>
     <tr>
-        <td>Цена: </td>
+        <td>Цена:</td>
         <td>${product.price}</td>
     </tr>
 </table>

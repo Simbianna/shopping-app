@@ -6,7 +6,7 @@ drop table if exists roles cascade ;
 
 CREATE TABLE products
 (
-    id    serial,
+    id    serial unique ,
     title varchar(100),
     price numeric(6, 2)
 );

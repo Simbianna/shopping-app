@@ -31,21 +31,21 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "username")
-    @NotBlank
-    @Size(max = 50)
+    @Size(max = 50, message = "Username must be less than 50 characters")
+    @NotBlank(message = "Username cant be empty")
     private String username;
 
     @Column(name = "password")
-    @NotBlank
-    @Size(min = 5, max = 80)
+    @NotBlank(message = "Password cant be empty")
+    @Size(min = 5, max = 80, message = "Password must be between 5 and 80 characters")
     private String password;
 
     @Column(name = "name")
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "Name cant be empty")
+    @Size(max = 100, message = "Name must be less than 50 characters")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Email cant be empty")
     @Column(name = "email", nullable = false, unique = true)
     @Size(max = 50)
     @Email
