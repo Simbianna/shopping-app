@@ -14,8 +14,8 @@ CREATE TABLE user_roles
 );
 
 INSERT INTO user_roles (role, user_id)
-VALUES ('ROLE_USER', 1),
-       ('ROLE_ADMIN', 1),
-       ('ROLE_USER', 2),
-       ('ROLE_USER', 3),
-       ('ROLE_USER', 4);
+VALUES ('USER', 1),
+       ('ADMIN', 1),
+       ('USER', 2),
+       ('USER', 3),
+       ('USER', 4);

@@ -12,19 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.simbial.shoppingapp.service.UserService;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    /* private DataSource dataSource;*/
-    private UserService userService;
 
-   /* @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }*/
+    private UserService userService;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -68,16 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/");
 
-/*
-        http.authorizeRequests()
-                //  .anyRequest().permitAll()
-                .antMatchers("/products/edit/**").hasAnyRole("ADMIN")
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/authenticateTheUser")
-                .permitAll();*/
     }
 
     @Bean
@@ -92,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
-
+}
     //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (1)
 //        auth.jdbcAuthentication().dataSource(dataSource);
@@ -105,8 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser(users.username("user1").password("pass1").roles("USER", "ADMIN"))
                 .withUser(users.username("user2").password("pass2").roles("USER"));
     }*/
-
-}
 //
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {

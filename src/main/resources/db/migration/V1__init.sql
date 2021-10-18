@@ -19,7 +19,7 @@ CREATE TABLE users
 (
     id       serial,
     username VARCHAR(50)  NOT NULL unique,
-    password VARCHAR(80)  NOT NULL unique,
+    password VARCHAR(80)  NOT NULL,
     name     VARCHAR(100) NOT NULL,
     email    VARCHAR(50)  NOT NULL,
     PRIMARY KEY (id)
@@ -41,9 +41,9 @@ CREATE TABLE roles
 
 
 INSERT INTO roles(name)
-VALUES ('ROLE_ADMIN'),
-       ('ROLE_MANAGER'),
-       ('ROLE_USER');
+VALUES ('ADMIN'),
+       ('MANAGER'),
+       ('USER');
 
 CREATE TABLE users_roles
 (
